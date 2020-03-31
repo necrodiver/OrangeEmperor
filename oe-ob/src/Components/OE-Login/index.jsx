@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
 export default class extends Component {
-  constructor(refs) {
-    super(refs);
+  constructor(props) {
+    super(props);
     this.state = {
       name: 'OE-Login'
     };

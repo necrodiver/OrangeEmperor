@@ -6,8 +6,8 @@ import OEMenu from '../OE-Menu/index';
 import OELogin from '../OE-Login/index';
 
 export default class extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isLogin: true
     };
