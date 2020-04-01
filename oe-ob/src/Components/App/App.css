@@ -1,21 +1,39 @@
 .oe-app {
   height: 100%;
 }
-.oe-app .oe-header {
-  height: 80px;
-  background-color: #666;
-}
-.oe-app .oe-section-body {
-  height: calc(100vh - 80px);
+.oe-app .oe-header-box {
   display: flex;
-  flex: 1;
+  justify-content: left;
+  align-items: center;
+  padding-left: 30px;
 }
-.oe-app .oe-section-body .oe-menu {
-  width: 220px;
-  height: 100%;
-  background-color: #888;
+.oe-app .oe-header-box .oe-header-btnmenu {
+  margin-left: 18px;
+  margin-right: 12px;
 }
-.oe-app .oe-section-body .oe-content {
-  width: calc(100% - 220px);
-  background-color: #bbb;
+.oe-app .oe-header-box .oe-header {
+  min-width: calc(100% - 44px);
+}
+.oe-app .oe-content-box {
+  margin: 18px 12px;
+  padding: 12px;
+  min-height: 280px;
+}
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+.site-layout .site-layout-background {
+  background: #fff;
 }

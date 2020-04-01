@@ -1,17 +1,25 @@
 import React, { Component, Fragment } from 'react';
-import './App.css';
 import './App.less';
 import OEHeader from '../OE-Header/index';
 import OEMenu from '../OE-Menu/index';
 import OELogin from '../OE-Login/index';
 
+import { Layout } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+
+const { Header, Sider, Content } = Layout;
+
 export default class extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: true
-    };
-  }
+  state = {
+    collapsed: false,
+    isLogin: true
+  };
+
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  };
   render() {
     return (
       <div className="oe-app">
@@ -19,17 +27,35 @@ export default class extends Component {
           <OELogin />
         ) : (
           <Fragment>
-            <header className="oe-header">
-              <OEHeader />
-            </header>
-            <section  className="oe-section-body">
-              <aside className="oe-menu">
-                <OEMenu />
-              </aside>
-              <main className="oe-content">
-                <h1>这里是内容区域</h1>
-              </main>
-            </section>
+            <Layout style={{ height: '100vh' }}>
+              <Sider
+                trigger={null}
+                collapsible
+                collapsed={this.state.collapsed}
+              >
+                <OEMenu collapsed={this.state.collapsed}></OEMenu>
+              </Sider>
+              <Layout className="site-layout">
+                <Header
+                  className="site-layout-background oe-header-box"
+                  style={{ padding: 0 }}
+                >
+                  {React.createElement(
+                    this.state.collapsed
+                      ? MenuUnfoldOutlined
+                      : MenuFoldOutlined,
+                    {
+                      className: 'trigger oe-header-btnmenu',
+                      onClick: this.toggle
+                    }
+                  )}
+                  <OEHeader></OEHeader>
+                </Header>
+                <Content className="site-layout-background oe-content-box">
+                  Content
+                </Content>
+              </Layout>
+            </Layout>
           </Fragment>
         )}
       </div>
