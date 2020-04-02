@@ -33,7 +33,7 @@ export default class extends Component {
                 collapsible
                 collapsed={this.state.collapsed}
               >
-                <OEMenu collapsed={this.state.collapsed}></OEMenu>
+                <OEMenu />
               </Sider>
               <Layout className="site-layout">
                 <Header

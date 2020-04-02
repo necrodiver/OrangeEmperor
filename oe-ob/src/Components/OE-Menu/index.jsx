@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
 import { Menu, Button } from 'antd';
+import PropTypes from 'prop-types';
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   AppstoreOutlined,
   PieChartOutlined,
   DesktopOutlined,
@@ -14,18 +13,18 @@ import {
 const { SubMenu } = Menu;
 
 export default class extends Component {
+  // static defaultProps = {
+  //   collapsed: true
+  // };
+  // static propTypes = {
+  //   collapsed: PropTypes.bool.isRequired
+  // };
   state = {
-    collapsed: false,
+    collapsed: true,
     menuKeys: ['1'],
     menuOpenKeys: ['sub1']
   };
 
-  constructor(props) {
-    super(props);
-    this.setState({
-      collapsed: props.collapsed
-    });
-  }
   render() {
     return (
       <Fragment>
@@ -34,7 +33,6 @@ export default class extends Component {
           defaultOpenKeys={this.state.menuOpenKeys}
           mode="inline"
           theme="dark"
-          inlineCollapsed={this.state.collapsed}
         >
           <Menu.Item key="1">
             <PieChartOutlined />
