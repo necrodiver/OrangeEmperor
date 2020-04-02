@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import { Menu, Button } from 'antd';
+import { Menu } from 'antd';
 import PropTypes from 'prop-types';
 import {
   AppstoreOutlined,
