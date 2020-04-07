@@ -1,3 +1,5 @@
+@import "//at.alicdn.com/t/font_1739810_ser4dn6rizi.css";
+
 body,
 h1,
 h2,
@@ -14,3 +16,46 @@ body {
     height: 100vh;
     width: 100vw;
 }
+
+//----------------  padding相关  -------------------
+@p: 30;
+
+.loop_pm(@i) when (@i <=@p) {
+    @num: @i;
+
+    .pl-@{num} {
+        padding-left: @num * 1px;
+    }
+
+    .pr-@{num} {
+        padding-right: @num * 1px;
+    }
+
+    .pt-@{num} {
+        padding-top: @num * 1px;
+    }
+
+    .pb-@{num} {
+        padding-bottom: @num * 1px;
+    }
+
+    .ml-@{num} {
+        padding-left: @num * 1px;
+    }
+
+    .mr-@{num} {
+        padding-right: @num * 1px;
+    }
+
+    .mt-@{num} {
+        padding-top: @num * 1px;
+    }
+
+    .mb-@{num} {
+        padding-bottom: @num * 1px;
+    }
+
+    .loop_pm(@i + 1);
+}
+
+.loop_pm(1);

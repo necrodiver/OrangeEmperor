@@ -1,15 +1,7 @@
+import './index.less';
 import React, { Component, Fragment } from 'react';
-
 import { Menu } from 'antd';
 import PropTypes from 'prop-types';
-import {
-  AppstoreOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined
-} from '@ant-design/icons';
-
 const { SubMenu } = Menu;
 
 export default class extends Component {
@@ -21,62 +13,100 @@ export default class extends Component {
   // };
   state = {
     collapsed: true,
-    menuKeys: ['1'],
-    menuOpenKeys: ['sub1']
+    menuKeys: ['Activity'],
+    menuOpenKeys: [],
+    menuList: [
+      {
+        keyCode: 'Activity',
+        name: '活动管理',
+        url: 'Activity',
+        icon: '&#xe61d;',
+        childList: [],
+      },
+      {
+        keyCode: 'Specialty',
+        name: '产品管理',
+        url: 'Specialty',
+        icon: '&#xe60b;',
+        childList: [
+          {
+            keyCode: 'Specialty-PriceSetting',
+            name: '价格配置',
+            url: 'priceSetting',
+            childList: [],
+          },
+        ],
+      },
+      {
+        keyCode: 'User',
+        name: '用户管理',
+        url: 'User',
+        icon: '&#xe650;',
+        childList: [],
+      },
+      {
+        keyCode: 'SystemConfig',
+        name: '系统配置',
+        url: 'SystemConfig',
+        icon: '&#xe62a;',
+        childList: [],
+      },
+    ],
   };
-
+  menuSelect = ({ item, key, keyPath, selectedKeys, domEvent }) => {
+    console.log('选项key', key);
+  };
   render() {
     return (
       <Fragment>
-        <Menu
-          defaultSelectedKeys={this.state.menuKeys}
-          defaultOpenKeys={this.state.menuOpenKeys}
-          mode="inline"
-          theme="dark"
-        >
-          <Menu.Item key="1">
-            <PieChartOutlined />
-            <span>选项 1</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <DesktopOutlined />
-            <span>选项 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <ContainerOutlined />
-            <span>选项 3</span>
-          </Menu.Item>
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <MailOutlined />
-                <span>菜单 1</span>
-              </span>
-            }
+        <div className="menu-logo">这里放logo</div>
+        {this.state.menuList && this.state.menuList.length > 0 ? (
+          <Menu
+            defaultSelectedKeys={this.state.menuKeys}
+            defaultOpenKeys={this.state.menuOpenKeys}
+            mode="inline"
+            theme="dark"
+            onSelect={this.menuSelect}
           >
-            <Menu.Item key="5">选项 5</Menu.Item>
-            <Menu.Item key="6">选项 6</Menu.Item>
-            <Menu.Item key="7">选项 7</Menu.Item>
-            <Menu.Item key="8">选项 8</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <AppstoreOutlined />
-                <span>菜单 2</span>
-              </span>
-            }
-          >
-            <Menu.Item key="9">选项 9</Menu.Item>
-            <Menu.Item key="10">选项 10</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="11">选项 11</Menu.Item>
-              <Menu.Item key="12">选项 12</Menu.Item>
-            </SubMenu>
-          </SubMenu>
-        </Menu>
+            {this.state.menuList.map((item) => {
+              if (item.childList && item.childList.length > 0) {
+                return (
+                  <SubMenu
+                    key={item.keyCode}
+                    title={
+                      <span>
+                        <i
+                          className="iconfont"
+                          dangerouslySetInnerHTML={{ __html: item.icon }}
+                        ></i>
+                        <span className="pl-6">{item.name}</span>
+                      </span>
+                    }
+                  >
+                    {item.childList.map((childItem) => {
+                      return (
+                        <Menu.Item key={childItem.keyCode}>
+                          <span>{childItem.name}</span>
+                        </Menu.Item>
+                      );
+                    })}
+                  </SubMenu>
+                );
+              }
+              return (
+                <Menu.Item key={item.keyCode}>
+                  <i
+                    className="iconfont"
+                    dangerouslySetInnerHTML={{ __html: item.icon }}
+                  ></i>
+                  <span className="pl-6">{item.name}</span>
+                </Menu.Item>
+              );
+            })}
+          </Menu>
+        ) : (
+          ''
+        )}
       </Fragment>
     );
   }

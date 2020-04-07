@@ -10,7 +10,7 @@ export default class extends Component {
     return (
       <Fragment>
         <div className="oe-header">
-          <h1>{this.state.name}</h1>
+          <span>{this.state.name}</span>
         </div>
       </Fragment>
     );
