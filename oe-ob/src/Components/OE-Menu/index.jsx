@@ -57,10 +57,11 @@ export default class extends Component {
     console.log('选项key', key);
   };
   render() {
+    let menuItem;
     return (
       <Fragment>
         <div className="menu-logo">这里放logo</div>
-        {this.state.menuList && this.state.menuList.length > 0 ? (
+        {this.state.menuList && this.state.menuList.length > 0 && (
           <Menu
             defaultSelectedKeys={this.state.menuKeys}
             defaultOpenKeys={this.state.menuOpenKeys}
@@ -68,6 +69,21 @@ export default class extends Component {
             theme="dark"
             onSelect={this.menuSelect}
           >
+            {
+              (menuItem = (childItem) => {
+                return (
+                  <Menu.Item key={childItem.keyCode}>
+                    {childItem.icon && (
+                      <i
+                        className="iconfont"
+                        dangerouslySetInnerHTML={{ __html: childItem.icon }}
+                      ></i>
+                    )}
+                    <span className="pl-6">{childItem.name}</span>
+                  </Menu.Item>
+                );
+              })
+            }
             {this.state.menuList.map((item) => {
               if (item.childList && item.childList.length > 0) {
                 return (
@@ -84,28 +100,14 @@ export default class extends Component {
                     }
                   >
                     {item.childList.map((childItem) => {
-                      return (
-                        <Menu.Item key={childItem.keyCode}>
-                          <span>{childItem.name}</span>
-                        </Menu.Item>
-                      );
+                      return menuItem(childItem);
                     })}
                   </SubMenu>
                 );
               }
-              return (
-                <Menu.Item key={item.keyCode}>
-                  <i
-                    className="iconfont"
-                    dangerouslySetInnerHTML={{ __html: item.icon }}
-                  ></i>
-                  <span className="pl-6">{item.name}</span>
-                </Menu.Item>
-              );
+              return menuItem(item);
             })}
           </Menu>
-        ) : (
-          ''
         )}
       </Fragment>
     );
