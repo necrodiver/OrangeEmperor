@@ -12,12 +12,12 @@ const { Header, Sider, Content } = Layout;
 export default class extends Component {
   state = {
     collapsed: false,
-    isLogin: true
+    isLogin: true,
   };
 
   toggle = () => {
     this.setState({
-      collapsed: !this.state.collapsed
+      collapsed: !this.state.collapsed,
     });
   };
   render() {
@@ -33,7 +33,7 @@ export default class extends Component {
                 collapsible
                 collapsed={this.state.collapsed}
               >
-                <OEMenu />
+                <OEMenu collapsed={this.state.collapsed} />
               </Sider>
               <Layout className="site-layout">
                 <Header
@@ -46,7 +46,7 @@ export default class extends Component {
                       : MenuFoldOutlined,
                     {
                       className: 'trigger oe-header-btnmenu',
-                      onClick: this.toggle
+                      onClick: this.toggle,
                     }
                   )}
                   <OEHeader></OEHeader>
