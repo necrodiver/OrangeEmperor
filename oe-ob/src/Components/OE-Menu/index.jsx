@@ -3,6 +3,9 @@ import React, { Component, Fragment } from 'react';
 import { Menu } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from '@ant-design/icons';
+import { createHashHistory } from 'history';
+
+const history = createHashHistory();
 const { SubMenu } = Menu;
 
 export default class extends Component {
@@ -20,7 +23,7 @@ export default class extends Component {
       {
         keyCode: 'Home',
         name: '首页',
-        url: 'Home',
+        url: '',
         icon: '&#xe605;',
         childList: [],
       },
@@ -31,9 +34,9 @@ export default class extends Component {
         icon: '&#xe61d;',
         childList: [
           {
-            keyCode: 'Activity-Index',
+            keyCode: 'Activity-Home',
             name: '首页活动',
-            url: 'Activity/Index',
+            url: 'Activity/Home',
           },
           {
             keyCode: 'Activity-TimeLimited',
@@ -51,7 +54,7 @@ export default class extends Component {
           {
             keyCode: 'Specialty-PriceSetting',
             name: '价格配置',
-            url: 'Specialty/priceSetting',
+            url: 'Specialty/PriceSetting',
           },
         ],
       },
@@ -80,6 +83,8 @@ export default class extends Component {
     this.setState({
       menuKeys: [key],
     });
+    console.log('history change:', key);
+    history.push(`/${key.split('-').join('/')}`);
   };
   // 菜单整体选择事件
   openChangeSubMenu = (openkeys) => {

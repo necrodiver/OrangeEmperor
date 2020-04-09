@@ -3,6 +3,8 @@ import './App.less';
 import OEHeader from '../OE-Header/index';
 import OEMenu from '../OE-Menu/index';
 import OELogin from '../OE-Login/index';
+import OEContent from '../OE-Content/index';
+import { Route } from 'react-router-dom';
 
 import { Layout } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
@@ -52,7 +54,7 @@ export default class extends Component {
                   <OEHeader></OEHeader>
                 </Header>
                 <Content className="site-layout-background oe-content-box">
-                  Content
+                  <OEContent></OEContent>
                 </Content>
               </Layout>
             </Layout>
