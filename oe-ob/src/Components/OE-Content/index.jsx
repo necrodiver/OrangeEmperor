@@ -14,6 +14,7 @@ export default class extends Component {
       <Fragment>
         <Switch>
           <Route exact path="/" component={Home}></Route>
+          <Route path="/Home" component={Home}></Route>
           <Route path="/Activity/Home" component={ActivityHome} />
           <Route path="/Activity/TimeLimited" component={ActivityTimeLimited} />
           <Route
