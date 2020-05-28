@@ -1,0 +1,4 @@
+-- offset代表从第几条记录“之后“开始查询，limit表明查询多少条结果
+select * from blog_auth order by id limit 10 offset 15;
+
+select * from blog_auth where deleted_on = 1 and state = 1
