@@ -1,11 +1,13 @@
 package utils
 
 import (
+	"bytes"
 	"crypto"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
 	"crypto/x509"
+	"encoding/base64"
 	"encoding/pem"
 	"fmt"
 	"os"
@@ -66,13 +68,46 @@ func rsaCreateKey(bits int) error {
 }
 
 // RSAEncrypt RSA公钥加密
-func RSAEncrypt(orgidata []byte) ([]byte, error) {
-	return rsa.EncryptPKCS1v15(rand.Reader, publicKeyOfRSA, orgidata)
+func RSAEncrypt(orgidata []byte) (string, error) {
+	// encryptedStr, err := rsa.EncryptPKCS1v15(rand.Reader, publicKeyOfRSA, orgidata)
+	// if err != nil {
+	// 	return "", err
+	// }
+	// return base64.URLEncoding.EncodeToString(encryptedStr), nil
+
+	partLen := publicKeyOfRSA.N.BitLen()/8 - 11
+	chunks := split(orgidata, partLen)
+	buffer := bytes.NewBufferString("")
+	for _, chunk := range chunks {
+		bytes, err := rsa.EncryptPKCS1v15(rand.Reader, publicKeyOfRSA, chunk)
+		if err != nil {
+			return "", err
+		}
+		buffer.Write(bytes)
+	}
+	return base64.RawURLEncoding.EncodeToString(buffer.Bytes()), nil
 }
 
 // RSADecrypt 私钥解密
-func RSADecrypt(ciphertext []byte) ([]byte, error) {
-	return rsa.DecryptPKCS1v15(rand.Reader, privateKeyOfRSA, ciphertext)
+func RSADecrypt(ciphertext []byte) (string, error) {
+	// decrypted, err := rsa.DecryptPKCS1v15(rand.Reader, privateKeyOfRSA, ciphertext)
+	// if err != nil {
+	// 	return "", err
+	// }
+	// return string(decrypted), nil
+
+	partLen := privateKeyOfRSA.N.BitLen() / 8
+	raw, err := base64.RawURLEncoding.DecodeString(string(ciphertext))
+	chunks := split([]byte(raw), partLen)
+	buffer := bytes.NewBufferString("")
+	for _, chunk := range chunks {
+		decrypted, err := rsa.DecryptPKCS1v15(rand.Reader, privateKeyOfRSA, chunk)
+		if err != nil {
+			return "", err
+		}
+		buffer.Write(decrypted)
+	}
+	return buffer.String(), err
 }
 
 // RsaSignWithSha256 RSA签名
@@ -96,4 +131,17 @@ func RsaVerySignWithSha256(data, signData, keyBytes []byte) bool {
 		panic(err)
 	}
 	return true
+}
+
+func split(buf []byte, lim int) [][]byte {
+	var chunk []byte
+	chunks := make([][]byte, 0, len(buf)/lim+1)
+	for len(buf) >= lim {
+		chunk, buf = buf[:lim], buf[lim:]
+		chunks = append(chunks, chunk)
+	}
+	if len(buf) > 0 {
+		chunks = append(chunks, buf[:len(buf)])
+	}
+	return chunks
 }

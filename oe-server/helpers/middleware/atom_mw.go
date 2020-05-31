@@ -2,6 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
+	// "oe_server/helpers/setting"
+	// "oe_server/helpers/utils"
 )
 
 var (
@@ -13,19 +15,18 @@ var (
 // ValidateMiddleware 验证请求参数是否进行加密
 func ValidateMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		atomStr := c.GetHeader("atom")
-		if atomStr == "" {
-			c.JSON(401, gin.H{"error": noAtom})
-			c.Abort()
-			return
-		}
-		// var body = c.Request.Body
-		// getData, err := ioutil.ReadAll(body)
-		// if err != nil {
-		// 	c.JSON(400, gin.H{"error": dataErr})
+		// 这里需要进行传入对应url判断是否需要atom这个token来约束，如果是登录接口，起初是没有atom
+		//setting.NoValidateUrls
+		// if(setting)
+		// atomStr := c.GetHeader("atom")
+
+		// if atomStr == nil {
+		// 	c.JSON(401, gin.H{"error": noAtom})
 		// 	c.Abort()
 		// 	return
 		// }
+		// atom := utils.RSADecrypt(byte[](atomStr))
+
 		c.Next()
 	}
 }

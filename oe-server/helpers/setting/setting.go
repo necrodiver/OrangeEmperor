@@ -9,16 +9,18 @@ import (
 
 // 配置文件读取
 var (
-	Cfg          *ini.File
-	RunMode      string
-	HTTP_PORT    string
-	ReadTimeout  time.Duration
-	WriteTimeout time.Duration
+	Cfg           *ini.File
+	RunMode       string
+	HTTP_PORT     string
+	ReadTimeout   time.Duration
+	WriteTimeout  time.Duration
+	TOKEN_TIMEOUT time.Duration
 
 	PageSize        int
 	AES_KEY         string
 	RSA_PUBLIC_KEY  string
 	RSA_PRIVATE_KEY string
+	NoValidateUrls  []string = []string{""}
 )
 
 func init() {
@@ -48,6 +50,7 @@ func loadServer() {
 	HTTP_PORT = sec.Key("HTTP_PORT").MustString("8082")
 	ReadTimeout = time.Duration(sec.Key("READ_TIMEOUT").MustInt(60)) * time.Second
 	WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
+	TOKEN_TIMEOUT = time.Duration(sec.Key("TOKEN_TIMEOUT").MustInt(60)) * time.Second
 }
 
 // LoadApp 读取APP
